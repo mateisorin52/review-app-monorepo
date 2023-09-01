@@ -1,0 +1,13 @@
+{
+  "name": "mero-assignment-monorepo",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/workspace": "15.9.6",
+    "nx": "15.9.6"
+  }
+}
