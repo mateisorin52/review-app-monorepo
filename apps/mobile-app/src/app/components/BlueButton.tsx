@@ -8,7 +8,7 @@ const BlueButton: React.FC<{ onPress: (event: GestureResponderEvent) => void; te
 const styles = StyleSheet.create({
   text: {
     color: MOB_COLORS.blue,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
   },
 });

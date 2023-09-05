@@ -4,7 +4,7 @@ export const useGetSelf = (filters?: any) => {
   let filtersString = 'user/self';
   const resp = useQuery(filtersString, {
     enabled: true,
-  }) as UseQueryResult<User>;
+  }) as UseQueryResult<User & { reviews: { id: string }[] }>;
 
   return resp;
 };

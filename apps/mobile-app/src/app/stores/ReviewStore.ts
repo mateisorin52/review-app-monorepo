@@ -1,7 +1,9 @@
+import { Review } from '@prisma/client';
 import { makeAutoObservable, action } from 'mobx';
 import ConfirmDialog from '../components/ConfirmDialog';
 
 export class ReviewStore {
+  selectedReview: Review;
   selectedRating: number = 1;
   page: number = 1;
   constructor() {
@@ -14,6 +16,9 @@ export class ReviewStore {
   };
   setSelectedRating = (value: number) => {
     this.selectedRating = value;
+  };
+  setSelectedReview = (review: Review) => {
+    this.selectedReview = review;
   };
 }
 

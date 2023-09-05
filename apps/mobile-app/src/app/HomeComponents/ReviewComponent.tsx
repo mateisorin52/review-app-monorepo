@@ -1,32 +1,38 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { MOB_COLORS } from '../common/styles';
 import StarRating from './StarRating';
 import TimeAgo from '@andordavoti/react-native-timeago';
+import BlueButton from '../components/BlueButton';
+import { reviewStore } from '../stores/ReviewStore';
+import { Review } from '@prisma/client';
+import { useGetSelf } from '../../providers/UserQuery';
 
-const ReviewComponent: React.FC<{ author: string; stars: number; date: Date; reviewText }> = ({
-  author,
-  date,
-  reviewText,
-  stars,
-}) => {
+const ReviewComponent: React.FC<{ review: Review; navigation: any }> = ({ review, navigation }) => {
+  const { setSelectedReview } = reviewStore;
+  const { data } = useGetSelf();
+  const handleStartEditReview = () => {
+    navigation.navigate('AddReview');
+    setSelectedReview(review);
+  };
+  const selfReviewsIds = useMemo(() => {
+    return data.reviews?.map((item) => item.id);
+  }, [data]);
   return (
     <View style={styles.container}>
       <View style={styles.imgContainer}>
-        <Image
-          source={require('../assets/head2.jpg')} // Replace with the path to your image
-          style={styles.image} // Customize the image styles as needed
-        />
+        <Image source={require('../assets/head2.jpg')} style={styles.image} />
       </View>
       <View style={styles.reviewInfoContainer}>
-        <Text style={styles.reviewAuthor}>{author}</Text>
+        <Text style={styles.reviewAuthor}>{review.displayedName || 'Anonymous'}</Text>
         <View style={styles.authorReviewContainer}>
-          <StarRating initialRating={stars} size={15} />
+          <StarRating initialRating={review.stars} size={15} />
           <Text style={styles.timeAgoText}>
-            <TimeAgo dateTo={date} />;
+            <TimeAgo dateTo={new Date(review.createdAt)} />
           </Text>
         </View>
-        <Text style={styles.reviewText}>{reviewText}</Text>
+        <Text style={styles.reviewText}>{review.message}</Text>
+        {selfReviewsIds?.includes(review.id) && <BlueButton onPress={handleStartEditReview} text="Edit Review" />}
       </View>
     </View>
   );
@@ -60,7 +66,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 100,
     width: '95%',
     alignSelf: 'center',
   },
@@ -68,9 +73,9 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 40,
     height: 50,
-    justifyContent: 'center', // Center the image vertically
-    alignItems: 'center', // Center the image horizontally   width: 50, // Customize the image width
-    resizeMode: 'cover', // Adjust the image resizeMode as needed
+    justifyContent: 'center',
+    alignItems: 'center',
+    resizeMode: 'cover',
   },
   image: {
     height: 40,

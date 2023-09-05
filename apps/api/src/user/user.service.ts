@@ -15,7 +15,7 @@ export class UserService {
   }
 
   findOne(id: string) {
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.prisma.user.findUnique({ where: { id }, include: { reviews: { select: { id: true } } } });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

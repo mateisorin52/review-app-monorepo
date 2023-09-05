@@ -1,9 +1,22 @@
 import React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, StyleProp, TextStyle } from 'react-native';
 import { MOB_COLORS } from '../common/styles';
 
-const ReviewInput: React.FC<{ onChangeText: (value: string) => void }> = ({ onChangeText }) => {
-  return <TextInput placeholder="Write an honest review" onChangeText={onChangeText} multiline style={styles.input} />;
+const ReviewInput: React.FC<{
+  value: string;
+  onChangeText: (value: string) => void;
+  placeholder?: string;
+  styleProp?: StyleProp<TextStyle>;
+}> = ({ onChangeText, value, styleProp, placeholder }) => {
+  return (
+    <TextInput
+      placeholder={placeholder}
+      value={value}
+      onChangeText={onChangeText}
+      multiline
+      style={[styles.input, styleProp]}
+    />
+  );
 };
 
 const styles = StyleSheet.create({

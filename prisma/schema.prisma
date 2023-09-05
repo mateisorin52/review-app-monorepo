@@ -20,11 +20,12 @@ model User {
 }
 
 model Review {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  stars     Int
-  user      User?    @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  message   String?
-  userId    String?  @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  stars         Int
+  displayedName String @default("")
+  user          User?    @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  message       String?
+  userId        String?  @db.ObjectId
 }
