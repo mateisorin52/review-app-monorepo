@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -10,7 +10,6 @@ import { useGetSelf } from '../../providers/UserQuery';
 import LoginScreen from '../Screens/LoginScreen';
 import RegisterScreen from '../Screens/RegisterScreen';
 import { MOB_COLORS } from '../common/styles';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import AddReviewScreen from '../Screens/AddReviewScreen';
 import ProfileScree from '../Screens/ProfileScree';
 const Stack = createNativeStackNavigator();
@@ -28,7 +27,6 @@ const ProfileStackNavigator = () => (
   </Stack.Navigator>
 );
 const AppNavigator = () => {
-  const { getItem } = useAsyncStorage('access_token');
   const self = useGetSelf();
   return (
     <NavigationContainer>

@@ -6,12 +6,17 @@
 
 ## Understand this workspace
 
-Run `nx graph` to see a diagram of the dependencies of the projects.
+- The workspace consists of 2 apps
+-- REST api (NestJS) - api
+-- Mobile app (React Native) - mobile-app
 
-## Remote caching
+## Running the apps
+* while in mero-assignment-monorepo run 'npm install' (node_modules are global)
 
-Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and make CI faster.
+- api - run 'npx nx serve api' ( a .env with DATABASE_URL='conn_string' needs to be created )
 
-## Further help
+- mobile-app - run 'npx nx run-android/run-ios mobile-app' ( the mobile app is currently coonected to the deployed api (https://review-app.evoware-software.ro) )
 
-Visit the [Nx Documentation](https://nx.dev) to learn more.
+## Miscellaneous
+- CI directory -> build_and_deploy.sh -> builds the docker image, tags it and pushes it to dockerhub
+- k8s -> manifests for deploying the api to GKE
