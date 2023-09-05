@@ -5,6 +5,7 @@
 #
 # Run the container with `docker run -p 3000:3000 -t api`.
 
+
 # note to self: multi stage build is needed so that the build is is also built on the same system
 FROM --platform=linux/amd64 node:16
 

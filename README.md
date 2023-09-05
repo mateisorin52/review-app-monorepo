@@ -11,7 +11,8 @@
 -- Mobile app (React Native) - mobile-app
 
 ## Running the apps
-* while in mero-assignment-monorepo run 'npm install' (node_modules are global)
+* while in mero-assignment-monorepo run 'npm install' (node_modules are global) 
+NOTE: in case of symlink no working, cd into apps/mobile app and run 'npm install'
 
 - api - run 'npx nx serve api' ( a .env with DATABASE_URL='conn_string' needs to be created )
 
