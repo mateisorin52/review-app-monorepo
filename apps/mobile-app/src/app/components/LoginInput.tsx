@@ -8,8 +8,8 @@ const LoginInput: React.FC<{
   iconName: string;
   placeholder: string;
   onChangeText: (value: string) => void;
-  id?: string;
-}> = ({ iconName, placeholder, onChangeText, id }) => {
+  value: string;
+}> = ({ iconName, placeholder, onChangeText, value }) => {
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => {
     setIsFocused(true);
@@ -41,7 +41,6 @@ const LoginInput: React.FC<{
         onBlur={handleBlur}
         style={styles.input}
         placeholder={placeholder}
-        id={id}
         autoCapitalize="none"
       />
     </View>

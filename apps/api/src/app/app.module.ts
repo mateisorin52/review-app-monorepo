@@ -1,9 +1,10 @@
 import { Module, ValidationPipe } from '@nestjs/common';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { AuthController } from '../auth/auth.controller';
 import { AuthModule } from '../auth/auth.module';
 import { AuthService } from '../auth/auth.service';
+import { HttpExceptionFilter } from '../exceptions/ExceptionFilter';
 import { PrismaService } from '../prisma-service/PrismaService';
 import { ReviewController } from '../review/review.controller';
 import { ReviewModule } from '../review/review.module';
@@ -25,6 +26,10 @@ import { AppService } from './app.service';
     JwtService,
     ReviewService,
     { provide: APP_PIPE, useClass: ValidationPipe },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
   ],
 })
 export class AppModule {}

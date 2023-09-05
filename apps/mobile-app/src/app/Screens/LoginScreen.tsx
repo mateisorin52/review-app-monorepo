@@ -1,30 +1,31 @@
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text, Button, TouchableOpacity, Alert } from 'react-native';
 import { usePost } from '../../providers/QueryClient';
 import { useGetSelf } from '../../providers/UserQuery';
 import BigButton from '../components/BigButton';
-import ConfirmCloseDialog from '../components/ConfirmCloseDialog';
-import ConfirmDialog from '../components/ConfirmDialog';
 import LoginInput from '../components/LoginInput';
 
 export const LoginScreen = ({ navigation, route }) => {
   const [credentials, setCredentials] = useState<{ name: string; password: string }>({ name: '', password: '' });
-  const { setItem, getItem } = useAsyncStorage('access_token');
-  const { refetch } = useGetSelf();
+  const { setItem } = useAsyncStorage('access_token');
+  const { refetch, isFetching: isLoadingSelf } = useGetSelf();
+  const [feedbackError, setFeedbackError] = useState<string>('');
   const { mutateAsync, isLoading } = usePost(() => {
     console.log('😭');
   });
   const handleGoToRegister = () => {
     navigation.navigate('Register');
   };
-
   const handleLogin = async () => {
+    setFeedbackError('');
     const res = await mutateAsync({ endpoint: 'auth/login', body: credentials });
-
     if (res?.access_token) {
       await setItem(res.access_token);
       await refetch();
+    } else {
+      setFeedbackError(res?.message);
     }
   };
 
@@ -37,6 +38,7 @@ export const LoginScreen = ({ navigation, route }) => {
             return { ...prev, name: value };
           })
         }
+        value={credentials.name}
         placeholder="Email"
         iconName="account"
       />
@@ -46,18 +48,24 @@ export const LoginScreen = ({ navigation, route }) => {
             return { ...prev, password: value };
           })
         }
+        value={credentials.password}
         placeholder="Password"
         iconName="lock"
       />
-
-      <BigButton title="Login" isLoading={isLoading} onPress={handleLogin} />
+      <BigButton title="Login" isLoading={isLoading || isLoadingSelf} onPress={handleLogin} />
+      <Text style={styles.feedbackError}>{feedbackError}</Text>
       <TouchableOpacity style={styles.registerLink} onPress={handleGoToRegister}>
-        <Text style={styles.registerText}>Nu ai încă un cont? Înregistrează-te</Text>
+        <Text style={styles.registerText}>Don't have an account yet? Sign Up</Text>
       </TouchableOpacity>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  feedbackError: {
+    color: 'red',
+    fontSize: 14,
+    padding: 10,
+  },
   registerLink: {
     position: 'absolute',
     bottom: 30,
@@ -81,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default observer(LoginScreen);
