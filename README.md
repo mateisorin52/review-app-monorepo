@@ -28,7 +28,7 @@
 ## Miscellaneous
 - 🌍 📱CI directory -> build_and_deploy.sh -> builds the docker image, tags it and pushes it to dockerhub
 - 🛳️ k8s -> manifests for deploying the api to GKE 🛳️
-- ❗️NOTE:  In case of Pods related error run
+- ❗️NOTE:  In case of Pods related error run (inside ios folder)
            rm -rf Podfile.lock Pods/ 
            rm -rf ~/Library/Caches/CocoaPods
            rm -rf ~/Library/Developer/Xcode/DerivedData/*
