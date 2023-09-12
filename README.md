@@ -18,6 +18,13 @@
 
 - 📱 mobile-app - run 'npx nx run-android/run-ios mobile-app' ( the mobile app is currently coonected to the deployed api (https://review-app.evoware-software.ro) )
 
+- Test accounts:
+- user: sorin
+- pass: sorin
+-   
+- user: sorin2
+- user: sorin2
+
 ## Miscellaneous
 - 🌍 📱CI directory -> build_and_deploy.sh -> builds the docker image, tags it and pushes it to dockerhub
 - 🛳️ k8s -> manifests for deploying the api to GKE 🛳️

@@ -5,6 +5,6 @@ import { PrismaService } from '../prisma-service/PrismaService';
 export class AppService {
   constructor(private readonly prisma: PrismaService) {}
   getData() {
-    return this.prisma.user.findMany();
+    return 'Review app api entry point';
   }
 }

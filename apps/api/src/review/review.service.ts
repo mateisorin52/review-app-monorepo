@@ -16,7 +16,7 @@ export class ReviewService {
       const total = await prismaClient.review.count();
 
       const itemsPerPage = 10;
-      const skip = itemsPerPage * (page - 1);
+      const skip = itemsPerPage * (page - 1) || 0;
       const take = itemsPerPage;
       const totalRating = await prisma.review.aggregate({
         _avg: {
@@ -25,7 +25,16 @@ export class ReviewService {
       });
       const avgRating = Math.ceil(totalRating._avg.stars * 10) / 10 || 0;
       const reviews = await prismaClient.review.findMany({
-        include: { user: true },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              createdAt: true,
+            },
+          },
+        },
         take,
         skip,
         orderBy: { createdAt: 'desc' },

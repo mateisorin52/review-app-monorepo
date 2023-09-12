@@ -3,6 +3,11 @@ import { IsString, MinLength, MaxLength, IsEmail, Matches, IsOptional, IsNotEmpt
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @IsString()
   @MinLength(2)
   @MaxLength(50)
   name: string;
@@ -12,9 +17,4 @@ export class CreateUserDto {
   @MinLength(6)
   @MaxLength(20)
   password: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsEmail()
-  email: string;
 }
